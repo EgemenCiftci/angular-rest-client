@@ -1,0 +1,22 @@
+<div>
+  <label>Id:</label>
+  <input type="text" [(ngModel)]="user.id" />
+  <label>Name:</label>
+  <input type="text" [(ngModel)]="user.name" />
+  <label>Email:</label>
+  <input type="text" [(ngModel)]="user.email" />
+  <label>Gender:</label>
+  <select [(ngModel)]="user.gender">
+    <option>female</option>
+    <option>male</option>
+  </select>
+  <label>Status:</label>
+  <select [(ngModel)]="user.status">
+    <option>active</option>
+    <option>inactive</option>
+  </select>
+  <div class="container">
+    <button class="item" (click)="cancel()">Cancel</button>
+    <button class="item" (click)="ok()">OK</button>
+  </div>
+</div>

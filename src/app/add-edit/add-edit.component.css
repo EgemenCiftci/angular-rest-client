@@ -1,0 +1,14 @@
+input,
+select,
+label {
+  width: 100%;
+  display: inline-block;
+}
+
+.container {
+  display: flex;
+}
+
+.item {
+  flex-grow: 1;
+}

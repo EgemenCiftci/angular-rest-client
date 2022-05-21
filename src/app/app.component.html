@@ -1,0 +1,8 @@
+<button (click)="add()">Add</button>
+
+<app-add-edit [user]="user"></app-add-edit>
+<app-data-grid
+  [users]="users$ | async"
+  (editClick)="edit($event)"
+  (removeClick)="remove($event)"
+></app-data-grid>
