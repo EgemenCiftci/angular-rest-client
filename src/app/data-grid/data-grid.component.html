@@ -1,5 +1,32 @@
 <table>
   <tr>
     <th>Id</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Gender</th>
+    <th>Status</th>
+  </tr>
+  <tr *ngFor="let user of users">
+    <td>
+      {{ user.id }}
+    </td>
+    <td>
+      {{ user.name }}
+    </td>
+    <td>
+      {{ user.email }}
+    </td>
+    <td>
+      {{ user.gender }}
+    </td>
+    <td>
+      {{ user.status }}
+    </td>
+    <td>
+      <button type="button" (click)="edit(user)">Edit</button>
+    </td>
+    <td>
+      <button type="button" (click)="remove(user)">Remove</button>
+    </td>
   </tr>
 </table>
