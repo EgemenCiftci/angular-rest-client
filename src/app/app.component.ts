@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription, tap } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { firstValueFrom, Observable } from 'rxjs';
 import { AppService } from './app.service';
 import { User } from './user';
 
@@ -8,7 +8,7 @@ import { User } from './user';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
   users$: Observable<User[]>;
   user = {
     id: undefined,
@@ -17,9 +17,6 @@ export class AppComponent implements OnInit, OnDestroy {
     gender: 'male',
     status: 'active',
   };
-  addUserSubscription: Subscription;
-  removeUserSubscription: Subscription;
-  editUserSubscription: Subscription;
 
   constructor(private appService: AppService) {}
 
@@ -27,28 +24,19 @@ export class AppComponent implements OnInit, OnDestroy {
     this.getUsers();
   }
 
-  ngOnDestroy(): void {
-    this.addUserSubscription?.unsubscribe();
-    this.removeUserSubscription?.unsubscribe();
-    this.editUserSubscription?.unsubscribe();
+  async add() {
+    await firstValueFrom(this.appService.addUser(this.user));
+    this.getUsers();
   }
 
-  add() {
-    this.addUserSubscription = this.appService
-      .addUser(this.user)
-      .subscribe(() => this.getUsers());
+  async remove(user: User) {
+    await firstValueFrom(this.appService.removeUser(user.id));
+    this.getUsers();
   }
 
-  remove(user: User) {
-    this.removeUserSubscription = this.appService
-      .removeUser(user.id)
-      .subscribe(() => this.getUsers());
-  }
-
-  edit(user: User) {
-    this.editUserSubscription = this.appService
-      .editUser(user)
-      .subscribe(() => this.getUsers());
+  async edit(user: User) {
+    await firstValueFrom(this.appService.editUser(user));
+    this.getUsers();
   }
 
   getUsers() {
@@ -60,6 +48,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   generateRandomName(): string {
-    return Math.random().toString(36).substr(2, 5);
+    return Math.random().toString(36).substring(2, 7);
   }
 }
